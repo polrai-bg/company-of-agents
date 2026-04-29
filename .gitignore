@@ -1,0 +1,20 @@
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+node_modules/
+.env
+.env.local
+
+# Per-instance OS state — anyone who clones this template will populate these,
+# but the template repo itself ships empty.
+01-identity/
+02-context/
+04-memory/
+05-connections/
+06-agents/
+
+# Working documents stay local to each instance.
+.deliverables/*
+!.deliverables/README.md
