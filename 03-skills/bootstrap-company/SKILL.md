@@ -1,171 +1,221 @@
 ---
 name: bootstrap-company
-description: Comprehensively interview the principal in phases to build a complete Agentic OS from an empty folder — identity, context, team, connections, and automations.
-when_to_use: The folder contains only this skill and a thin AGENTS.md pointing at it. Run it once at company creation. Do not run it on an already-populated OS.
+description: Comprehensively interview the principal in phases to build a complete Agentic OS from an empty folder: identity, context, team, connections, and automations.
+when_to_use: The folder contains only the shipped framework files and a thin AGENTS.md pointing at this skill. Run it once at company creation. Do not run it on an already-populated OS; use add-new-agent for incremental roster changes.
 ---
 
 # Bootstrap a Company
 
-A staged interview that turns an empty folder into a complete Agentic OS. Treats the conversation like founding a real company: get the foundation right, then design the team, then wire the systems.
+A staged interview that turns an empty folder into a complete Agentic OS. Treat the conversation like founding a real company: get the foundation right, then design the team, then wire the systems.
 
 ## Before you start
 
-- **Confirm this is a fresh bootstrap.** If `01-identity/` already exists or `06-agents/` has any agent other than this skill's seed, stop and ask the principal whether to (a) abort, (b) continue and overwrite, or (c) switch to `add-new-agent` for incremental additions.
-- **Allow pause-and-resume.** The interview is long. After each phase, offer the principal a save point: "We can stop here and resume next session — your answers so far are recorded in `04-memory/bootstrap-progress.md`." Write progress to that file at every phase boundary.
-- **One question per turn.** Never batch. Reflect each answer back in one line ("I heard X — right?") before advancing.
+- **Confirm this is a fresh bootstrap.** If `01-identity/` already exists, or `06-agents/` has any agent in it, stop and ask the principal whether to (a) abort, (b) continue and overwrite, or (c) switch to `add-new-agent` for incremental additions.
+- **The framework files are not a sign of a populated OS.** `01-sops/`, `00-tasks.md`, `00-deliverables/README.md`, `00-templates/README.md`, and `03-skills/add-new-agent/` ship with the template. Their presence is expected. Do not read them as a completed bootstrap, and do not overwrite them.
+- **Write policy.** During Phases 1 through 6, write interview answers only to `04-memory/bootstrap-progress.md`, at each phase boundary. Do **not** write identity, context, connection, or agent files until Phase 7, after an explicit "yes". Each phase header below says what it *stages* for Phase 7.
+- **Allow pause and resume.** After each phase, offer: "We can stop here and resume next session. Your answers so far are recorded in `04-memory/bootstrap-progress.md`."
+- **One question per turn.** Never batch. Reflect each answer back in one line ("I heard X, right?") before advancing.
 - **Offer a default when the principal hesitates.** Reaction beats authoring from scratch.
 
 ## The framework being built
 
-The OS uses **6 top-level folders**:
+Nine numbered folders plus one task file at the root:
 
 ```
-01-identity/      SOUL.md (company), USER.md (principal), PRINCIPLES.md
-02-context/       company.md, domain.md, projects.md
-03-skills/        shared workflows
-04-memory/        cross-session persistence
-05-connections/   one file per external system
-06-agents/        each agent has AGENT.md, skills/, memory/, optionally automations/
+00-deliverables/     every artifact an agent produces, one dated folder each (tracked; ships with template)
+00-tasks.md          company-wide task list (ships with template, empty)
+00-templates/        reusable formats (ships with template, empty)
+01-identity/         SOUL.md (company), USER.md (principal), PRINCIPLES.md
+01-sops/             cross-agent conventions (ships with template, complete)
+02-context/          company.md, domain.md, projects.md, vocabulary.md
+03-skills/           shared workflows (bootstrap-company, add-new-agent; both ship with template)
+04-memory/           cross-session persistence
+05-connections/      one file per external system
+06-agents/           each agent has AGENT.md, skills/, memory/, optionally automations/
 ```
 
-Verification = required section in every `SKILL.md` and `AGENT.md`.
-Automations = lives under the agent that owns it.
+Bootstrap creates `01-identity/`, `02-context/`, `04-memory/`, `05-connections/`, and `06-agents/`. Everything else already exists and is the shipped framework.
+
+- Verification is a required section in every `SKILL.md` and every `AGENT.md`.
+- Automations live under the agent that owns them, and every one declares a runner.
+- Automations produce drafts or signals. They never auto-send.
 
 ---
 
-## Phase 1 — Company essence (5 questions)
+## Phase 1: Company essence (6 questions)
 
 ### 1.1 Name
 > "What's the company called?"
 
 ### 1.2 Synopsis
 > "Give me one or two sentences on what the company does and who it's for."
-Reflect back. If it has more than one product or audience, ask which is the primary.
+
+Reflect back. If it has more than one product or audience, ask which is primary.
 
 ### 1.3 Stage
 > "Where are you today: idea, building MVP, MVP complete, paying customers, scaling?"
 
 ### 1.4 12-month north star
-> "What's true 12 months from now if the year goes well? Pick the single most-load-bearing metric or milestone."
+> "What's true 12 months from now if the year goes well? Pick the single most load-bearing metric or milestone."
 
 ### 1.5 Operating principles
-> "What are 2–4 principles you want every agent in this company to operate by? (e.g. 'verify before claiming done', 'route, don't sprawl', 'one agent per concern'.)"
-If the principal is stuck, offer the four defaults from this skill's `references/default-principles.md` (or just propose them inline) and ask which to keep.
+> "What are 2 to 4 principles you want every agent in this company to operate by?"
 
-**Phase 1 writes (at end of phase, after confirmation):** `01-identity/SOUL.md`, `01-identity/PRINCIPLES.md`, top of `02-context/company.md`.
+If the principal is stuck, propose these four defaults inline and ask which to keep:
+
+1. **Verify before claiming done.** No agent reports a task complete without a concrete observable.
+2. **Route, don't sprawl.** The Chief of Staff routes. Specialists stay in their lane.
+3. **Draft, don't send.** Anything that leaves the company is drafted for approval. The Chief of Staff is the sole sender.
+4. **Challenge before agreeing.** Stress-test the request before responding. Reflexive agreement and reflexive contrarianism are both failures.
+
+### 1.6 Writing conventions
+> "Any writing conventions every agent must follow? Words or punctuation you never want to see, terms you always want spelled a specific way, formats you hate. These get enforced on every deliverable, so be specific."
+
+Capture verbatim. These land in `01-identity/USER.md` and are enforced by `01-sops/deliverables.md`.
+
+**Phase 1 stages for Phase 7:** `01-identity/SOUL.md`, `01-identity/PRINCIPLES.md`, top of `02-context/company.md`.
 
 ---
 
-## Phase 2 — The principal (4 questions)
+## Phase 2: The principal (4 questions)
 
 ### 2.1 Identity
 > "Your name, role at the company, and email?"
 
 ### 2.2 How you work
-> "How do you prefer to work? (Async vs sync, terse vs verbose, options + recommendation vs just options, batch vs steady stream, anything else.)"
+> "How do you prefer to work? Async or sync, terse or verbose, options plus a recommendation or just options, batched or a steady stream, anything else."
 
 ### 2.3 Decision style
-> "When agents bring you a decision, what makes one easy for you to act on? (Specific examples > principles here.)"
+> "When agents bring you a decision, what makes one easy for you to act on? Specific examples beat principles here."
 
 ### 2.4 Hard nos
-> "What should agents never do without explicit confirmation? Always include external sends, money movement, and destructive data actions — what else?"
+> "What should agents never do without explicit confirmation? These four are always on, so I'm confirming rather than asking: external sends of any kind (a draft is not a send, and the Chief of Staff is the only sender after you say 'send it'), money movement of any kind, actions on a major client even when routine, and destructive data actions. What would you add?"
 
-**Phase 2 writes:** `01-identity/USER.md`.
+Also confirm the secrets rule: agents never paste, copy, or relocate credentials. They point at where the credentials live.
+
+**Phase 2 stages for Phase 7:** `01-identity/USER.md`.
 
 ---
 
-## Phase 3 — Domain (3 questions)
+## Phase 3: Domain (3 questions)
 
-### 3.1 Industry / market
+### 3.1 Industry and market
 > "What industry or market does the company live in? Who are the buyers, what's the landscape, what's the size?"
 
 ### 3.2 Vocabulary
-> "What 5–15 terms must every agent get exactly right? (Words your buyers use, technical terms, internal jargon.)"
-Capture term + one-line definition each.
+> "What 5 to 15 terms must every agent get exactly right? Words your buyers use, technical terms, internal jargon."
+
+Capture the term plus a one-line definition each. Ask specifically what generic phrasing would signal that an agent is faking domain knowledge.
 
 ### 3.3 Active projects and deadlines
 > "What's on the front burner right now? List active projects, deadlines, and stakeholders."
 
-**Phase 3 writes:** `02-context/domain.md`, `02-context/projects.md`, fills out the rest of `02-context/company.md`.
+**Phase 3 stages for Phase 7:** `02-context/domain.md`, `02-context/vocabulary.md`, `02-context/projects.md`, the rest of `02-context/company.md`.
 
 ---
 
-## Phase 4 — Team design (variable length)
+## Phase 4: Team design (variable length)
 
-This is the longest phase. Goal: produce the full org chart with enough depth that the Chief of Staff can route correctly. Per-agent depth comes later via `add-new-agent` if needed.
+Goal: produce the full org chart with enough depth that the Chief of Staff can route correctly. Per-agent depth can deepen later via `add-new-agent`.
 
 ### 4.1 Org sketch
-> "Two ways to do this. Option A: tell me the roles you want (e.g. 'CEO, CMO, marketing manager, developer, designer, PM'). Option B: describe the work that needs to happen and I'll propose a team. Which?"
+> "Two ways to do this. Option A: tell me the roles you want. Option B: describe the work that needs to happen and I'll propose a team. Which?"
 
-### 4.2 If Option A — confirm the list
+### 4.2 If Option A: confirm the list
 Reflect the list back. Ask: "Anything missing? Anything that should be split or merged?"
 
-### 4.3 If Option B — propose the team
-Based on the synopsis (Phase 1.2), stage (1.3), domain (Phase 3), and active projects (3.3), propose 4–8 roles with one-line role statements each. Ask for adds, drops, splits.
+### 4.3 If Option B: propose the team
+Based on synopsis, stage, domain, and active projects, propose 4 to 8 roles with a one-line role statement each. Ask for adds, drops, splits.
 
 ### 4.4 Always include the Chief of Staff
-The Chief of Staff is the routing entry point and is not optional. Confirm with the principal: "I'll add a Chief of Staff as the front door — every request lands there first and routes to the specialists. OK?"
+The Chief of Staff is the routing entry point and is not optional. Confirm: "I'll add a Chief of Staff as the front door. Every request lands there first and routes to specialists. OK?"
+
+The Chief of Staff is the **lead session, never a subagent**. Do not create a subagent definition for it in the tool's subagent directory. See `AGENTS.md`.
 
 ### 4.5 Per-agent quick capture
-For each agent in the confirmed list (one agent at a time, not all at once):
-1. **Purpose** — "One sentence: why does this role exist?"
-2. **Top 3 responsibilities** — "Three things this role owns end-to-end."
-3. **Out of scope** — "What's NOT this role's job, even though someone might assume it is?"
-4. **Common request shapes** — "Three concrete things you'd ask this agent in a normal week."
-5. **Escalation** — "When should this agent stop and check with you?" (Default to the company hard-nos from Phase 2.4.)
+For each agent in the confirmed list, one agent at a time:
 
-If the principal wants more depth on any single agent, offer to run `add-new-agent` after bootstrap completes.
+1. **Purpose.** One sentence: why does this role exist?
+2. **Top 3 responsibilities.** Three things it owns end to end.
+3. **Out of scope.** What is not this role's job even though someone might assume it is. Must block external sends and money movement for every specialist.
+4. **Common request shapes.** Three concrete asks in a normal week. These become routing-table rows.
+5. **Escalation.** When it stops and checks. Defaults to the hard nos from 2.4.
 
-### 4.6 Routing table
-After all agents are captured, draft the Chief of Staff routing table from the "common request shapes" entries. Show it to the principal: "These are the routing rules. Add, remove, or change?"
+If the principal wants more depth on one agent, offer `add-new-agent` after bootstrap.
 
-**Phase 4 writes:** `06-agents/<each-agent>/AGENT.md`, `06-agents/<each-agent>/memory/README.md`, `06-agents/README.md` (roster), `06-agents/chief-of-staff/AGENT.md` (with routing table) + its three default skills (`triage-request`, `clarify-intent`, `route-to-agent`).
+### 4.6 The review layer (scaffolded, not interviewed)
+
+**Validator and Skeptic are not optional and are not up for discussion.** Scaffold both. Do not ask whether the principal wants them. Do explain, in two lines, why they exist:
+
+> "I'm also adding two review agents. The Validator checks whether a deliverable is true (numbers tie to source, claims trace, paths resolve) and can fail it. The Skeptic checks whether it's sound (assumptions, failure modes) and is advisory only. They exist because an agent that got a number wrong will also check it wrong. Self-verification is self-graded."
+
+Then **offer** the third:
+
+> "Will agents write public copy meant to sound like you personally? If yes, I'll add a Voice Reviewer that can fail a draft on voice alone."
+
+Scaffold the Voice Reviewer only on a yes.
+
+All reviewers are **output-facing**. They review other agents' deliverables. They never take requests from the principal and never challenge the principal's asks. Their contract is already written in `01-sops/review.md`, so their `AGENT.md` files point at it rather than restating it.
+
+### 4.7 Routing table
+After all agents are captured, draft the Chief of Staff routing table from the common request shapes. Show it: "These are the routing rules. Add, remove, or change?"
+
+**Phase 4 stages for Phase 7:** `06-agents/<each-agent>/AGENT.md`, `06-agents/<each-agent>/memory/README.md`, `06-agents/README.md` (roster), `06-agents/chief-of-staff/AGENT.md` with the routing table, the review agents (`validator/`, `skeptic/`, and `voice-reviewer/` if offered and accepted), plus the Chief of Staff's five default skills: `triage-request`, `clarify-intent`, `route-to-agent`, `execute-send`, `run-daily-digest`.
 
 ---
 
-## Phase 5 — Connections (variable length)
+## Phase 5: Connections (variable length)
 
 ### 5.1 What systems
-> "What real systems will agents need to reach? Common ones: Gmail, Calendar, HubSpot, GitHub or Linear, Slack, Figma, Notion or Drive, Stripe, analytics. List the ones that matter for this company."
+> "What real systems will agents need to reach? Common ones: email, calendar, CRM, issue tracker, chat, design tool, docs or drive, payments, analytics. List the ones that matter."
 
-### 5.2 Per-system: read or write?
-For each system, one question:
-> "<System>: read-only, drafts only, or full read/write? And what should always require explicit confirmation before agents act?"
+### 5.2 Per system: read or write?
+> "<System>: read-only, drafts only, or full read and write? And what should always require explicit confirmation before an agent acts?"
 
-Default to the safest: most systems start read-only or drafts-only. Writes require explicit principal confirmation per call.
+Default to the safest option. Most systems start read-only or drafts-only. External writes require confirmation per call, and the Chief of Staff is the only agent that performs an approved external send.
 
 ### 5.3 Auth
-> "<System>: how is auth handled — env var, OAuth, MCP server, none yet? Don't paste secrets here, just point at where they live."
+> "<System>: how is auth handled? Environment variable, OAuth, an MCP server, nothing yet? Don't paste secrets here. Just point at where they live."
 
 ### 5.4 Ownership
-> "Which agent(s) primarily use <system>?"
+> "Which agent or agents primarily use <system>?"
 
-**Phase 5 writes:** `05-connections/<system>.md` for each system.
+**Phase 5 stages for Phase 7:** `05-connections/<system>.md` for each system, each with Purpose, Mechanism, Auth, and Allowed operations.
 
 ---
 
-## Phase 6 — Automations (3 questions)
+## Phase 6: Automations (4 questions)
 
 ### 6.1 Recurring work
-> "What recurring work should happen on a schedule? Examples: weekly pipeline report, daily inbox triage, Monday roadmap pull, monthly investor update draft. List what would actually save you time."
+> "What recurring work should happen on a schedule? Examples: a weekly pipeline report, daily inbox triage, a morning brief, an end-of-day digest. List what would actually save you time."
 
-### 6.2 Per-automation
-For each automation:
-- Trigger (cron / event)
-- Owning agent
-- Output destination (file, message, draft email)
-- Failure mode (default: notify principal, don't retry destructively)
+### 6.2 Per automation
+For each one, capture: intended trigger (cron or event), owning agent, output destination, and failure mode. Default failure mode is notify the principal and do not retry destructively.
 
-### 6.3 Confirmation gates
-> "Which of these can run end-to-end vs. which produce a draft for you to confirm before action? Default to draft-only for anything externally visible."
+### 6.3 Runner (required, do not skip)
 
-**Phase 6 writes:** `06-agents/<owning-agent>/automations/<automation-name>.md` for each.
+For each automation, ask:
+
+> "Is anything actually going to fire this on a schedule today, or is it a checklist you'll run by hand? Manual is the normal answer at bootstrap and it's the one I'll write unless you name a live scheduler."
+
+Record exactly one runner value per automation, per `01-sops/automations.md`:
+
+- `manual` (the default, and almost always correct on day one)
+- `scheduled: <trigger name or id>`
+- `workflow: <tool>/<workflow name>`
+
+**Never produce an automation file with a cron expression and no runner.** The cron line is the intended schedule. It is aspirational until something is wired to it, and an automation that looks scheduled but is not creates a silent gap where everyone assumes it ran.
+
+### 6.4 Confirmation gates
+> "Which of these can run end to end, and which produce a draft for you to confirm before anything happens? Default is draft-only for anything externally visible."
+
+**Phase 6 stages for Phase 7:** `06-agents/<owning-agent>/automations/<automation-name>.md` for each, every one carrying a `## Runner` section, plus the status table in `01-sops/automations.md` filled in with one row per automation.
 
 ---
 
-## Phase 7 — Confirm and scaffold
+## Phase 7: Confirm and scaffold
 
-Show the principal a single summary:
+Show one summary, then ask: "Proceed? (yes / changes)". **Only write files after an explicit "yes."**
 
 ```
 About to write:
@@ -174,60 +224,84 @@ About to write:
   SOUL.md, USER.md, PRINCIPLES.md
 
 02-context/
-  company.md, domain.md, projects.md
+  company.md, domain.md, vocabulary.md, projects.md
 
 03-skills/
-  add-new-agent/SKILL.md       (so you can add agents incrementally later)
   README.md
 
 04-memory/
   README.md
-  bootstrap-progress.md          (interview record)
+  bootstrap-progress.md
 
 05-connections/
-  <each system>.md               (N files)
+  <each system>.md
 
 06-agents/
-  README.md                      (roster)
-  chief-of-staff/                AGENT.md + 3 routing skills
-  <each specialist>/             AGENT.md + memory/README.md
-  <agents with automations>/     automations/<name>.md
+  README.md                    (roster)
+  chief-of-staff/              AGENT.md + triage-request, clarify-intent,
+                               route-to-agent, execute-send, run-daily-digest
+  validator/                   AGENT.md + memory/README.md
+  skeptic/                     AGENT.md + memory/README.md
+  voice-reviewer/              AGENT.md + memory/README.md   (only if accepted in 4.6)
+  <each specialist>/           AGENT.md + memory/README.md
+  <agents with automations>/   automations/<name>.md, each with a ## Runner section
 
-AGENTS.md                        (entry point — already exists; updated to point at the populated OS)
+AGENTS.md                      (updated to point at the populated OS; the framework
+                               rules already in it carry forward, not replaced)
+
+Already shipped with the template. Confirm present, do not overwrite:
+  00-deliverables/README.md
+  00-tasks.md                  (empty table, ready for the first row)
+  00-templates/README.md
+  01-sops/                     README, deliverables, task-tracking, review,
+                               parallel-work, automations
+  03-skills/bootstrap-company/SKILL.md
+  03-skills/add-new-agent/SKILL.md
 ```
-
-Ask: "Proceed? (yes / changes)"
-
-Only write files after explicit "yes."
 
 ---
 
-## After scaffolding — handoff
+## After scaffolding: handoff
 
-Tell the principal:
 1. "Company is live. Start any new conversation by reading `AGENTS.md`."
-2. "Talk to the Chief of Staff — every request enters there."
-3. "Want deeper specs on any agent? Run the `add-new-agent` skill on that role to do a full deep-dive interview."
-4. "Run `bootstrap-company` once. For incremental changes after this, use `add-new-agent` or edit files directly."
+2. "Talk to the Chief of Staff. Every request enters there."
+3. "Deliverables land in `00-deliverables/YYYY-MM-DD-<slug>/` and get indexed in `00-tasks.md`."
+4. "Every automation is `manual` until you wire a runner. Nothing is on a schedule right now."
+5. "Want a deeper spec on any agent? Run `add-new-agent` on that role."
+6. "Run `bootstrap-company` once. After this, use `add-new-agent` or edit files directly."
 
 ## Verification (required section)
 
 Before declaring this skill done, confirm:
-- [ ] All 6 top-level folders exist with their `README.md`.
-- [ ] `01-identity/` has SOUL, USER, PRINCIPLES — no template placeholders left.
+
+- [ ] All nine numbered folders exist, with a `README.md` where one is expected, plus `00-tasks.md` at the root.
+- [ ] `01-identity/` has SOUL, USER, and PRINCIPLES with no template placeholders left. USER hard nos include: a draft is not a send, Chief of Staff is the sole sender, no money movement, major-client approval, no secrets movement, no destructive data actions.
+- [ ] `01-identity/USER.md` records the writing conventions from 1.6, and they are not contradicted anywhere in the scaffold.
 - [ ] `02-context/company.md` synopsis matches what the principal said in 1.2.
-- [ ] Every agent listed in `06-agents/README.md` has an `AGENT.md` with all six sections (Role, Scope in/out, Default loop, Common request shapes, Escalation, Success criteria).
-- [ ] Chief of Staff routing table covers every "common request shape" captured across all agents.
-- [ ] Every connection file has the four sections (Purpose, Mechanism, Auth, Allowed operations).
-- [ ] Every automation lives under its owning agent's `automations/` folder.
-- [ ] `04-memory/bootstrap-progress.md` exists and records the interview answers, so a future session can audit the choices.
+- [ ] Every agent in `06-agents/README.md` has an `AGENT.md` with: Role, Top 3 responsibilities, Scope in and out, Default loop, Common request shapes, Escalation, Skills, Automations, Success criteria, Verification.
+- [ ] `06-agents/validator/` and `06-agents/skeptic/` exist. `06-agents/voice-reviewer/` exists if and only if the principal said yes in 4.6.
+- [ ] Every reviewer's `AGENT.md` states that it is output-facing and points at `01-sops/review.md` rather than restating the contract.
+- [ ] There is **no** `chief-of-staff` entry in the tool's subagent directory. Every other specialist has one.
+- [ ] The Chief of Staff has all five default skills and a routing table covering every common request shape captured in Phase 4.
+- [ ] Every connection file has Purpose, Mechanism, Auth, and Allowed operations. No secret values appear in any of them.
+- [ ] Every automation lives under its owning agent's `automations/` folder, **has a `## Runner` section**, and is draft-only or signal-only for anything externally visible.
+- [ ] The status table in `01-sops/automations.md` lists every automation and matches the per-file runner declarations.
+- [ ] `00-tasks.md` still has its header and column row, and no invented example rows.
+- [ ] `01-sops/` is unmodified and its five SOPs plus README are present.
+- [ ] `04-memory/bootstrap-progress.md` records the interview answers, so a future session can audit the choices.
+- [ ] No identity, context, connection, or agent file was written before the Phase 7 confirmation.
 
 ## Anti-patterns
 
-- **Skipping phases to "save time".** Each phase informs the next. Skipping Phase 3 (domain) makes Phase 4 (team design) generic.
+- **Skipping phases to save time.** Each phase feeds the next. Skipping the domain phase makes the team phase generic.
 - **Batching questions.** A 30-question form is not an interview. One at a time, every time.
-- **Writing files mid-interview.** Only Phase 7 writes. Earlier phases stage progress in `04-memory/bootstrap-progress.md` only.
-- **Inventing the company.** When the principal hesitates, *propose* options; don't *assume* answers.
-- **Letting "out of scope" stay empty for any agent.** Out of scope drives routing more than in-scope does.
+- **Writing OS files mid-interview.** Only Phase 7 writes. Phases 1 through 6 stage progress in `04-memory/bootstrap-progress.md` and nowhere else.
+- **Inventing the company.** When the principal hesitates, propose options. Do not assume answers.
+- **Letting "out of scope" stay empty for any agent.** Out of scope drives routing more than in scope does.
 - **Generic success criteria.** "Does the job well" is not measurable. Push for observables.
-- **Skipping the Chief of Staff.** It's the entry point. Non-negotiable.
+- **Skipping the Chief of Staff.** It is the entry point. Non-negotiable.
+- **Creating a Chief of Staff subagent.** Only the lead session can spawn. A Chief of Staff that cannot dispatch is a dead end.
+- **Scaffolding the Chief of Staff without `execute-send` and `run-daily-digest`.** Those two are what make it the front door rather than a router.
+- **Scaffolding an automation with a cron expression and no runner.** The file will read as scheduled, nothing will fire it, and nobody will find out until the output has been missing for a month.
+- **Skipping the review layer because the company is small.** A one-person company is exactly where an unchecked wrong number reaches a customer fastest, because there is no second human in the loop. Validator and Skeptic are cheap. Scaffold them.
+- **Overwriting the shipped framework files.** `01-sops/`, `00-tasks.md`, and the two skills in `03-skills/` come with the template. Bootstrap confirms them, it does not rewrite them.

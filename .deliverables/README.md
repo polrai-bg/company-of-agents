@@ -1,23 +1,22 @@
-# .deliverables/
+# .deliverables/ (local scratch only)
 
-Active working documents — drafts, outlines, copy, decks, ready-to-ship artifacts.
+**This is not the deliverables folder.** Shipped work goes to `00-deliverables/`.
 
-## What goes here
+See `01-sops/deliverables.md` for the rule.
 
-Marketing copy, landing page outlines, investor updates, press releases, sales collateral, any artifact intended to be read or shipped.
+## What this folder is
 
-## What does NOT go here
+Local-only working scratch. Everything here except this README is gitignored. Nothing in this folder is part of the repo, travels to another machine, or survives a fresh clone.
 
-- Audit handoffs / decision history → `04-memory/`
-- Skill content → `03-skills/<skill>/SKILL.md` or agent-local
-- Agent specs → `06-agents/<agent>/AGENT.md`
+## Why it still exists
 
-## Convention
+Earlier versions of this framework shipped deliverables here, on the theory that outputs are not framework structure and should stay hidden.
 
-- One file per deliverable. Date-prefixed: `YYYY-MM-DD-<topic>.md`.
-- For multi-part deliverables, use a folder: `2026-04-28-launch/post.md`, `landing.md`, `email.md`.
-- Add YAML frontmatter (`type`, `author`, `status`, `audience`, `related-audits`).
+That was wrong. Gitignored work is not tracked, not reviewable, and not linkable from `00-tasks.md`, which means a reviewer cannot check it and the task index points at nothing. The convention moved to `00-deliverables/`, tracked. The folder stays only so that the old name has a sign on it.
 
-## Why dot-prefixed
+## Rules for agents
 
-`.deliverables/` is hidden from default `ls`. These are outputs, not framework structure.
+- **Never ship a deliverable here.** Use `00-deliverables/YYYY-MM-DD-<slug>/`.
+- **Never link to a path in here from `00-tasks.md`, from `04-memory/`, or from any other tracked file.** The link will be dead for everyone but this machine.
+- If you find a `.deliverables/` path referenced somewhere, treat it as a broken historical reference, not as an instruction.
+- Use this folder only for genuine throwaway scratch that must not be committed. If you are unsure, use `00-deliverables/`.

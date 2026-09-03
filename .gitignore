@@ -1,3 +1,4 @@
+# Editor and OS noise
 .DS_Store
 .idea/
 .vscode/
@@ -7,14 +8,39 @@ node_modules/
 .env
 .env.local
 
-# Per-instance OS state — anyone who clones this template will populate these,
-# but the template repo itself ships empty.
+# ---------------------------------------------------------------------------
+# Category 1: template ships empty, the clone populates.
+#
+# These folders hold per-instance OS state. The template repo has nothing to
+# put in them, so they are ignored here to keep the public template clean.
+#
+# If you cloned this to run your own company, you almost certainly want your
+# OS tracked in git. Delete this block after bootstrap so your identity,
+# context, memory, connections, and roster are versioned like everything else.
+# ---------------------------------------------------------------------------
 01-identity/
 02-context/
 04-memory/
 05-connections/
 06-agents/
 
-# Working documents stay local to each instance.
+# ---------------------------------------------------------------------------
+# Category 2: plain scratch. Never tracked, in the template or in a clone.
+#
+# .deliverables/ is local-only working scratch. It is NOT the deliverables
+# folder. Only its README is tracked, and that README exists to say so.
+# ---------------------------------------------------------------------------
 .deliverables/*
 !.deliverables/README.md
+
+# ---------------------------------------------------------------------------
+# Deliberately NOT ignored, and it should stay that way:
+#
+#   00-deliverables/   tracked work. Deliverables have to be reviewable,
+#                      linkable from 00-tasks.md, and present in a fresh
+#                      clone. That is the whole point of the folder.
+#   00-tasks.md        the company-wide index over those deliverables.
+#   00-templates/      reusable formats, shared across the company.
+#   01-sops/           shipped framework: cross-agent conventions.
+#   03-skills/         shipped framework: bootstrap-company, add-new-agent.
+# ---------------------------------------------------------------------------
