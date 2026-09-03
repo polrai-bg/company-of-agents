@@ -48,9 +48,11 @@ The deliverable folder is the durable record. `00-tasks.md` is the index the lea
 
 ## Enforcement
 
-This SOP is enforced through verification checklists, not through memory. Every deliverable-producing skill ends with a "task row written or updated" verification item, and the work is not done until it passes.
+The mechanism is a verification checklist. Every deliverable-producing skill ends with a "task row written or updated" item, and the work is not done until that item passes. With no checklist anywhere, the table ends up empty.
 
-Relying on agents to remember is how the table ends up empty. An audit of a running system found zero task rows against eleven shipped deliverables, all of which existed on disk. The work happened. The index did not.
+Do not over-trust it. A checklist only fires when the skill carrying it is invoked, and invoking the skill is itself something someone has to remember. Enforcement relocates the memory dependency; it does not remove it. Expect partial coverage on ad-hoc work, and expect the lead to reconcile the gap.
+
+So measure rather than assume. After roughly a month of real use, count deliverable folders shipped against rows written. Harden the SOP if the rows are earning their friction, lighten it if they are not, and decide on that count rather than on faith in the mechanism. Writing the row automatically is the only version that does not depend on someone remembering at all.
 
 ## Disruption recovery
 

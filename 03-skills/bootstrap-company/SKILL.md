@@ -34,7 +34,7 @@ Nine numbered folders plus one task file at the root:
 06-agents/           each agent has AGENT.md, skills/, memory/, optionally automations/
 ```
 
-Bootstrap creates `01-identity/`, `02-context/`, `04-memory/`, `05-connections/`, and `06-agents/`. Everything else already exists and is the shipped framework.
+Bootstrap creates `01-identity/`, `02-context/`, `04-memory/`, `05-connections/`, and `06-agents/`. It also writes two things outside the numbered tree, once the principal names their tool in 5.5: the one-line tool shim, and one subagent definition per specialist so the lead session can actually spawn them. Everything else already exists and is the shipped framework.
 
 - Verification is a required section in every `SKILL.md` and every `AGENT.md`.
 - Automations live under the agent that owns them, and every one declares a runner.
@@ -180,7 +180,24 @@ Default to the safest option. Most systems start read-only or drafts-only. Exter
 ### 5.4 Ownership
 > "Which agent or agents primarily use <system>?"
 
-**Phase 5 stages for Phase 7:** `05-connections/<system>.md` for each system, each with Purpose, Mechanism, Auth, and Allowed operations.
+### 5.5 Which tool runs this OS
+
+> "Which agentic tool will you actually run this in day to day? Claude Code, Cursor, Copilot, Gemini, Windsurf, something else? I need it for two things: the one-line shim file that points the tool at `AGENTS.md`, and the directory that tool reads agent definitions from, which is where every specialist has to be registered before the Chief of Staff can spawn it."
+
+Record two values. Do not guess either.
+
+- **Shim path.** `CLAUDE.md` (Claude Code), `.cursor/rules/main.mdc` (Cursor), `.github/copilot-instructions.md` (Copilot), `GEMINI.md` (Gemini), `.windsurfrules` (Windsurf). One line of content, per `AGENTS.md`.
+- **Subagent directory.** The directory name varies by tool. `.claude/agents/<slug>.md` is the Claude Code form. Some tools have no subagent mechanism at all.
+
+If the tool has no way to spawn separate agents, say so plainly instead of inventing a path:
+
+> "This tool runs one session, so the Chief of Staff will role-play the specialists from a single context. That means the Validator and the Skeptic end up reviewing work their own context wrote, which is the thing `01-sops/review.md` exists to prevent. The OS still works. The review layer is weaker than it looks, and you should know that before you lean on it."
+
+Record that limitation in `04-memory/bootstrap-progress.md` and repeat it in the handoff.
+
+If the principal has not picked a tool yet, write no shim and no definitions, and say in the handoff that no specialist is spawnable until the tool is named.
+
+**Phase 5 stages for Phase 7:** `05-connections/<system>.md` for each system, each with Purpose, Mechanism, Auth, and Allowed operations. Plus the shim path and subagent directory from 5.5, which Phase 7 uses to register the roster.
 
 ---
 
@@ -246,6 +263,15 @@ About to write:
   <each specialist>/           AGENT.md + memory/README.md
   <agents with automations>/   automations/<name>.md, each with a ## Runner section
 
+<subagent directory from 5.5>/
+  <slug>                       one definition per specialist, each pointing at
+                               06-agents/<slug>/AGENT.md. .claude/agents/<slug>.md
+                               is the Claude Code form.
+                               NO chief-of-staff entry. The omission is the rule.
+
+<shim path from 5.5>           one line: "See AGENTS.md, single source of truth
+                               for this Agentic OS." Nothing else in the file.
+
 AGENTS.md                      (updated to point at the populated OS; the framework
                                rules already in it carry forward, not replaced)
 
@@ -259,12 +285,29 @@ Already shipped with the template. Confirm present, do not overwrite:
   03-skills/add-new-agent/SKILL.md
 ```
 
+### Registering the specialists so the lead can spawn them
+
+`06-agents/` is documentation. It does not make anyone spawnable. The tool only knows an agent exists if that agent has a definition in the subagent directory captured in 5.5, so write one per specialist on the confirmed roster, including the Validator, the Skeptic, and the Voice Reviewer if it was accepted in 4.6.
+
+**Write none for the Chief of Staff.** Say that out loud in the summary, in one line, so the omission reads as the rule from `AGENTS.md` rather than as something you forgot.
+
+Each definition is a spawn card, not a second copy of the role. Keep it to about one screen:
+
+- The slug, matching `06-agents/<slug>/`.
+- **When to spawn it**, written as trigger conditions drawn from the purpose and the common request shapes captured in 4.5. This is what the lead matches a request against, so "handles pricing questions and competitor comparisons" beats "the marketing agent."
+- **The tools it is allowed**, if the tool supports scoping them. This is where a reviewer that must not edit the work it reviews gets denied edit access, rather than being asked nicely not to.
+- **A body** that names the agent, states plainly that it is not the Chief of Staff, points at `06-agents/<slug>/AGENT.md` as the definition that outranks anything in the card, carries the company hard nos from 2.4, names the agent's review exposure per `01-sops/review.md`, and reminds it that its final message is the return value handed back to whoever spawned it, not a note to a human.
+
+Do not restate the role. The card points at `AGENT.md`. A card that grows its own copy of the scope is a second source of truth, it will drift out of sync with the roster, and nobody will notice which one the agent actually read.
+
+Then write the shim file at the path from 5.5, containing the one line from `AGENTS.md` and nothing else.
+
 ---
 
 ## After scaffolding: handoff
 
 1. "Company is live. Start any new conversation by reading `AGENTS.md`."
-2. "Talk to the Chief of Staff. Every request enters there."
+2. "Talk to the Chief of Staff. Every request enters there. Every other agent is registered with your tool and spawnable by name; the Chief of Staff deliberately is not, because it is the lead session you are already talking to."
 3. "Deliverables land in `00-deliverables/YYYY-MM-DD-<slug>/` and get indexed in `00-tasks.md`."
 4. "Every automation is `manual` until you wire a runner. Nothing is on a schedule right now."
 5. "Want a deeper spec on any agent? Run `add-new-agent` on that role."
@@ -281,7 +324,10 @@ Before declaring this skill done, confirm:
 - [ ] Every agent in `06-agents/README.md` has an `AGENT.md` with: Role, Top 3 responsibilities, Scope in and out, Default loop, Common request shapes, Escalation, Skills, Automations, Success criteria, Verification.
 - [ ] `06-agents/validator/` and `06-agents/skeptic/` exist. `06-agents/voice-reviewer/` exists if and only if the principal said yes in 4.6.
 - [ ] Every reviewer's `AGENT.md` states that it is output-facing and points at `01-sops/review.md` rather than restating the contract.
-- [ ] There is **no** `chief-of-staff` entry in the tool's subagent directory. Every other specialist has one.
+- [ ] Every specialist on the confirmed roster, including the Validator, the Skeptic, and the Voice Reviewer if it was accepted, has a definition in the subagent directory named in 5.5, and each one points at its own `06-agents/<slug>/AGENT.md`.
+- [ ] There is **no** `chief-of-staff` entry in that directory, and the Phase 7 summary named that omission as deliberate.
+- [ ] The shim file named in 5.5 exists, holds the single line pointing at `AGENTS.md`, and duplicates no OS content.
+- [ ] If the tool has no subagent mechanism, or the principal has not picked a tool, that is recorded in `04-memory/bootstrap-progress.md` and was named in the handoff, along with what it costs the review layer. No directory or shim was invented to satisfy this checklist.
 - [ ] The Chief of Staff has all five default skills and a routing table covering every common request shape captured in Phase 4.
 - [ ] Every connection file has Purpose, Mechanism, Auth, and Allowed operations. No secret values appear in any of them.
 - [ ] Every automation lives under its owning agent's `automations/` folder, **has a `## Runner` section**, and is draft-only or signal-only for anything externally visible.
@@ -301,6 +347,7 @@ Before declaring this skill done, confirm:
 - **Generic success criteria.** "Does the job well" is not measurable. Push for observables.
 - **Skipping the Chief of Staff.** It is the entry point. Non-negotiable.
 - **Creating a Chief of Staff subagent.** Only the lead session can spawn. A Chief of Staff that cannot dispatch is a dead end.
+- **Scaffolding the roster and never registering it with the tool.** `06-agents/` is documentation. Until each specialist has a definition in the subagent directory, nobody is spawnable and one session role-plays the whole company from a single context. Review then degrades to the same context re-reading its own draft, which is the self-grading `01-sops/review.md` exists to replace, and it degrades silently because the ceremony still runs.
 - **Scaffolding the Chief of Staff without `execute-send` and `run-daily-digest`.** Those two are what make it the front door rather than a router.
 - **Scaffolding an automation with a cron expression and no runner.** The file will read as scheduled, nothing will fire it, and nobody will find out until the output has been missing for a month.
 - **Skipping the review layer because the company is small.** A one-person company is exactly where an unchecked wrong number reaches a customer fastest, because there is no second human in the loop. Validator and Skeptic are cheap. Scaffold them.

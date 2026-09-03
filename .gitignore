@@ -5,27 +5,13 @@
 *.swp
 *.swo
 node_modules/
-.env
-.env.local
+
+# Secrets. Real values only ever live here, never in a tracked OS file.
+.env*
+!.env.example
 
 # ---------------------------------------------------------------------------
-# Category 1: template ships empty, the clone populates.
-#
-# These folders hold per-instance OS state. The template repo has nothing to
-# put in them, so they are ignored here to keep the public template clean.
-#
-# If you cloned this to run your own company, you almost certainly want your
-# OS tracked in git. Delete this block after bootstrap so your identity,
-# context, memory, connections, and roster are versioned like everything else.
-# ---------------------------------------------------------------------------
-01-identity/
-02-context/
-04-memory/
-05-connections/
-06-agents/
-
-# ---------------------------------------------------------------------------
-# Category 2: plain scratch. Never tracked, in the template or in a clone.
+# Local scratch. Never tracked, in the template or in a clone.
 #
 # .deliverables/ is local-only working scratch. It is NOT the deliverables
 # folder. Only its README is tracked, and that README exists to say so.
@@ -43,4 +29,17 @@ node_modules/
 #   00-templates/      reusable formats, shared across the company.
 #   01-sops/           shipped framework: cross-agent conventions.
 #   03-skills/         shipped framework: bootstrap-company, add-new-agent.
+#
+#   01-identity/       your OS, written by bootstrap. The template ships
+#   02-context/        without these because the files are not in the repo,
+#   04-memory/         not because anything ignores them. Once bootstrap
+#   05-connections/    writes them, commit them. An untracked OS cannot be
+#   06-agents/         reviewed, cannot be recovered, and does not follow you
+#                      to a second machine, and git status will look clean the
+#                      whole time.
+#
+# Secrets are the exception, and they are already handled above: real values
+# live in a .env* file, all of which are ignored. Files in 05-connections/
+# point at where credentials live and never hold the values themselves, so
+# they are safe to track. See 03-skills/bootstrap-company/SKILL.md, phase 5.3.
 # ---------------------------------------------------------------------------

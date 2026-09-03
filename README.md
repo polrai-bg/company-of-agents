@@ -146,7 +146,7 @@ The defaults are set so that the expensive mistakes need a human in the loop, an
 - **Automations produce drafts or signals. They never auto-send.** And every automation declares what actually runs it, so nothing looks scheduled when it isn't.
 - **Reviewers can fail work.** A Validator FAIL means the task is not done, no matter how confident the agent that wrote it was.
 - **Money, client commitments, secrets, and destructive data actions are hard nos** for every agent, in every role, always.
-- **Plain markdown.** No lock-in, no vendor, no SaaS to cancel. Fork it, edit it, modify it. The framework is yours.
+- **An agent that can't reach live data says so.** It ships the work with the gap marked, not a number it made up.
 
 ## Tool-agnostic
 
